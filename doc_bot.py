@@ -1,4 +1,5 @@
 import os
+import discord
 
 from dotenv import load_dotenv
 from discord.ext import commands
@@ -8,11 +9,13 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 
 bot = commands.Bot(command_prefix='/')
 
-@bot.command(name='mv_user')
-async def moveUser(ctx, destination, *args)
-    if (ctx.channel.name != "bot_commands"):
-        return
+@bot.event
+async def on_ready():
+    print('Connected to Discord!')
 
-    for u in args:
-        bot.move_user(u,destination)
+@bot.command()
+async def mv_user(ctx, channel: discord.VoiceChannel, *members: discord.Member):
+    for m in members:
+        await m.move_to(channel)
 
+bot.run(TOKEN)
