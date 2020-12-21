@@ -3,6 +3,9 @@ import discord
 
 from dotenv import load_dotenv
 from discord.ext import commands
+from typing import Union
+
+import sorting
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -17,5 +20,16 @@ async def on_ready():
 async def mv_user(ctx, channel: discord.VoiceChannel, *members: discord.Member):
     for m in members:
         await m.move_to(channel)
+
+@bot.command()
+async def sort_users(ctx, channels: commands.Greedy[discord.VoiceChannel], members: commands.Greedy[discord.Member]):
+    sorting.shuffle(members)
+    buckets, ok = sorting.distribute(len(channels),members)
+    if (ok):
+        i = 0
+        for channel in channels:
+            for member in buckets[i]:
+                await member.move_to(channel)
+            i += 1
 
 bot.run(TOKEN)
