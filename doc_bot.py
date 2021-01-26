@@ -1,11 +1,11 @@
-import os
 import discord
 from discord.ext import commands
 
 import sorting
-import settings
+from settings import Settings
+from youtube import YoutubeCog
 
-settings.load()
+settings = Settings()
 TOKEN = settings.DISCORD_TOKEN
 
 bot = commands.Bot(command_prefix='/')
@@ -30,4 +30,5 @@ async def sort_users(ctx, channels: commands.Greedy[discord.VoiceChannel], membe
                 await member.move_to(channel)
             i += 1
 
+bot.add_cog(YoutubeCog(bot,settings))
 bot.run(TOKEN)
