@@ -1,14 +1,12 @@
 import os
 import discord
-
-from dotenv import load_dotenv
 from discord.ext import commands
-from typing import Union
 
 import sorting
+import settings
 
-load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
+settings.load()
+TOKEN = settings.DISCORD_TOKEN
 
 bot = commands.Bot(command_prefix='/')
 
