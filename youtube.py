@@ -40,7 +40,6 @@ class YoutubeCog(commands.Cog):
     async def checkRecentUploads(self):
         try:
             response = self.playlistRequest.execute()
-
             #First video is the most recent
             recentVideo = response['items'][0]
             videoDateString = recentVideo['contentDetails']['videoPublishedAt']
