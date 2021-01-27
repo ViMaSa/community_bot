@@ -12,7 +12,7 @@ class YoutubeCog(commands.Cog):
     def __init__(self,bot,settings):
         self.bot = bot
         self.settings = settings
-        self.prevTime = datetime.now()
+        self.prevTime = datetime.utcnow()
         self.service = build(YOUTUBE_API_SERVICE_NAME,YOUTUBE_API_VERSION,
             developerKey=self.settings.GOOGLE_DEVELOPER_KEY)
         self.collection = self.service.playlistItems()
