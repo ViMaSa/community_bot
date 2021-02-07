@@ -10,16 +10,21 @@ TOKEN = settings.DISCORD_TOKEN
 
 bot = commands.Bot(command_prefix='/')
 
+def checkbotchannel(ctx):
+    return ctx.channel.id == 790038053355913226
+
 @bot.event
 async def on_ready():
     print('Connected to Discord!')
 
 @bot.command()
+@commands.check(checkbotchannel)
 async def mv_user(ctx, channel: discord.VoiceChannel, *members: discord.Member):
     for m in members:
         await m.move_to(channel)
 
 @bot.command()
+@commands.check(checkbotchannel)
 async def sort_users(ctx, channels: commands.Greedy[discord.VoiceChannel], members: commands.Greedy[discord.Member]):
     sorting.shuffle(members)
     buckets, ok = sorting.distribute(len(channels),members)
