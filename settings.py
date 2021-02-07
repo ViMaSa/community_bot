@@ -12,4 +12,4 @@ def load():
     DEVELOPER_KEY = os.getenv('DEVELOPER_KEY')
     PLAYLIST_ID = os.getenv('PLAYLIST_ID')
     MAX_RESULTS = int(os.getenv('MAX_RESULTS'))
-    DISCORD_TOKEN = os.getenv('DT')
+    DISCORD_TOKEN = os.getenv('DISCORD_AUTH_TOKEN')
