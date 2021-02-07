@@ -58,5 +58,11 @@ class YoutubeCog(commands.Cog):
         return f"https://www.youtube.com/watch?v={videoID}"
 
     async def sendNotification(self,message):
-        channel = await self.bot.fetch_channel('790038053355913226')
-        await channel.send(message)
+        channel = self.bot.get_channel(790038053355913226)
+        guild = self.bot.get_guild(708614576123543632)
+        # Leaving this here for testing purposes. When ready, just use the guild.default_role property.
+        # role = guild.default_role
+        # Using admin role as test
+        role = guild.get_role(710946375457701949)
+        content = f'{role.mention} {message}'
+        await channel.send(content)
