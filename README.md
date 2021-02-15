@@ -22,3 +22,6 @@ When the environment is setup, run doc_bot with the following:
 If successfull, the console will display:
 
     "Connected to Discord!"
+
+### Deploying to Heroku
+Instead of using a .env file, create a "config var" on the heroku project for each setting in settings.txt.
