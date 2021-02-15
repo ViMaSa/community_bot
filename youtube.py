@@ -58,8 +58,8 @@ class YoutubeCog(commands.Cog):
         return f"https://www.youtube.com/watch?v={videoID}"
 
     async def sendNotification(self,message):
-        channel = self.bot.get_channel(804158091599151184)
-        guild = self.bot.get_guild(708614576123543632)
+        channel = self.bot.get_channel(self.settings.CHANNEL_ID)
+        guild = self.bot.get_guild(self.settings.GUILD_ID)
         role = guild.default_role
         content = f'{role.mention} {message}'
         await channel.send(content)

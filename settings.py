@@ -10,3 +10,5 @@ class Settings(object):
         self.PLAYLIST_ID = os.getenv('PLAYLIST_ID')
         self.MAX_RESULTS = int(os.getenv('MAX_RESULTS'))
         self.DISCORD_TOKEN = os.getenv('DISCORD_AUTH_TOKEN')
+        self.CHANNEL_ID = int(os.getenv('CHANNEL_ID'))
+        self.GUILD_ID = int(os.getenv('GUILD_ID'))
