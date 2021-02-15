@@ -15,7 +15,11 @@ def checkbotchannel(ctx):
 
 @bot.event
 async def on_ready():
+    channel = bot.get_channel(settings.CHANNEL_ID)
+    guild = bot.get_guild(settings.GUILD_ID)
     print('Connected to Discord!')
+    print(f'Current server: {guild.name}')
+    print(f'YT messages set to channel: {channel.name}')
 
 @bot.command()
 @commands.check(checkbotchannel)
