@@ -61,5 +61,5 @@ class YoutubeCog(commands.Cog):
         channel = self.bot.get_channel(self.settings.CHANNEL_ID)
         guild = self.bot.get_guild(self.settings.GUILD_ID)
         role = guild.default_role
-        content = f'{role.mention} {message}'
+        content = f'{role.name} {message}'
         await channel.send(content)
