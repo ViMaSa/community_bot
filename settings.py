@@ -12,4 +12,8 @@ class Settings(object):
         self.DISCORD_TOKEN = os.getenv('DISCORD_AUTH_TOKEN')
         self.CHANNEL_ID = int(os.getenv('CHANNEL_ID'))
         self.GUILD_ID = int(os.getenv('GUILD_ID'))
+        self.TWITCH_TOKEN = os.getenv('TWITCH_TOKEN')
+        self.TWITCH_CLIENT_ID = os.getenv('TWITCH_CLIENT_ID')
+        self.TWITCH_USER_ID = os.getenv('TWITCH_USER_ID')
+        self.TWITCH_MSG = os.getenv('TWITCH_MSG')
         
