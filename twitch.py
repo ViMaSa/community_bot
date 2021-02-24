@@ -43,7 +43,7 @@ class TwitchCog(commands.Cog):
         await self.bot.wait_until_ready()
 
     async def sendNotification(self,message):
-        channel = self.bot.get_channel(790038053355913226)
+        channel = self.bot.get_channel(self.settings.CHANNEL_ID)
         guild = self.bot.get_guild(self.settings.GUILD_ID)
         role = guild.default_role
         content = f'{role.name}\n{message}'
