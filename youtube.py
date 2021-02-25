@@ -38,15 +38,19 @@ class YoutubeCog(commands.Cog):
             'Accept':'application/json'
         }
         response = requests.get(url,headers=headers,params=params)
-        #First video is the most recent
-        recentVideo = response.json()['items'][0]
-        videoDateString = recentVideo['contentDetails']['videoPublishedAt']
-        videoDate = parse(videoDateString,ignoretz=True)
-        print(f'Most recent video date: {videoDate}')
-        if videoDate > self.prevTime:
-            self.prevTime = videoDate
-            print(f"New video published on: {videoDate}")
-            return recentVideo['contentDetails']['videoId']
+        if (response.status_code == 200):
+            #First video is the most recent
+            recentVideo = response.json()['items'][0]
+            videoDateString = recentVideo['contentDetails']['videoPublishedAt']
+            videoDate = parse(videoDateString,ignoretz=True)
+            if videoDate > self.prevTime:
+                self.prevTime = videoDate
+                print(f"New video published on: {videoDate}")
+                return recentVideo['contentDetails']['videoId']
+            else:
+                print(f'Most recent video date: {videoDate}')
+        else:
+            print(f'Youtube: Received invalid response code: {response.status_code} Body:\n{response.text}')
 
         return ""
 
