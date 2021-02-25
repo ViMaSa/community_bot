@@ -1,9 +1,8 @@
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
 from datetime import datetime
 from dateutil.parser import parse
 from discord.ext import tasks, commands
 import time
+import requests
 
 YOUTUBE_API_SERVICE_NAME = 'youtube'
 YOUTUBE_API_VERSION = 'v3'
@@ -13,12 +12,6 @@ class YoutubeCog(commands.Cog):
         self.bot = bot
         self.settings = settings
         self.prevTime = datetime.utcnow()
-        self.service = build(YOUTUBE_API_SERVICE_NAME,YOUTUBE_API_VERSION,
-            developerKey=self.settings.GOOGLE_DEVELOPER_KEY)
-        self.collection = self.service.playlistItems()
-        self.playlistRequest = self.collection.list(part="contentDetails",
-            playlistId=self.settings.PLAYLIST_ID,
-            maxResults=self.settings.MAX_RESULTS)
         self.videoChecker.start()
 
     @tasks.loop(seconds = 60)
@@ -33,24 +26,31 @@ class YoutubeCog(commands.Cog):
     async def before_videoChecker(self):
         await self.bot.wait_until_ready()
 
-    @videoChecker.after_loop
-    async def after_videoChecker(self):
-        self.service.close()
-
     async def checkRecentUploads(self):
-        try:
-            response = self.playlistRequest.execute()
+        url = 'https://youtube.googleapis.com/youtube/v3/playlistItems'
+        params = {
+            'part':'contentDetails',
+            'maxResults':str(self.settings.MAX_RESULTS),
+            'playlistId':self.settings.PLAYLIST_ID,
+            'key':self.settings.GOOGLE_DEVELOPER_KEY
+        }
+        headers = {
+            'Accept':'application/json'
+        }
+        response = requests.get(url,headers=headers,params=params)
+        if (response.status_code == 200):
             #First video is the most recent
-            recentVideo = response['items'][0]
+            recentVideo = response.json()['items'][0]
             videoDateString = recentVideo['contentDetails']['videoPublishedAt']
             videoDate = parse(videoDateString,ignoretz=True)
-            print(f'Most recent video date: {videoDate}')
             if videoDate > self.prevTime:
                 self.prevTime = videoDate
                 print(f"New video published on: {videoDate}")
                 return recentVideo['contentDetails']['videoId']
-        except HttpError as e:
-            print(e.content)
+            else:
+                print(f'Most recent video date: {videoDate}')
+        else:
+            print(f'Youtube: Received invalid response code: {response.status_code} Body:\n{response.text}')
 
         return ""
 
