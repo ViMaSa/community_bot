@@ -6,6 +6,7 @@ import asyncio
 import sorting
 from settings import Settings
 from youtube import YoutubeCog
+from twitch import TwitchCog
 
 settings = Settings()
 TOKEN = settings.DISCORD_TOKEN
@@ -42,6 +43,7 @@ async def sort_users(ctx, channels: commands.Greedy[discord.VoiceChannel], membe
             i += 1
 
 bot.add_cog(YoutubeCog(bot,settings))
+bot.add_cog(TwitchCog(bot,settings))
 loop = asyncio.get_event_loop()
 try:
     loop.run_until_complete(bot.start(TOKEN))
