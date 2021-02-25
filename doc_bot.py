@@ -1,5 +1,7 @@
 import discord
 from discord.ext import commands
+import time
+import asyncio
 
 import sorting
 from settings import Settings
@@ -40,4 +42,8 @@ async def sort_users(ctx, channels: commands.Greedy[discord.VoiceChannel], membe
             i += 1
 
 bot.add_cog(YoutubeCog(bot,settings))
-bot.run(TOKEN)
+loop = asyncio.get_event_loop()
+try:
+    loop.run_until_complete(bot.start(TOKEN))
+except KeyboardInterrupt:
+    loop.run_until_complete(bot.logout())
