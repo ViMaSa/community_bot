@@ -21,8 +21,9 @@ class TwitchCog(commands.Cog):
         queryParams = {'user_id': self.settings.TWITCH_USER_ID}
 
         response = requests.get(url,params=queryParams,headers=headers)
+        ok = response.status_code == 200
 
-        if (response.status_code == 200 and len(response.json()['data']) > 0):
+        if ok and len(response.json()['data']) > 0:
             values = response.json()['data'][0]
             streamType = values['type']
             startedAt = values['started_at']
@@ -36,6 +37,8 @@ class TwitchCog(commands.Cog):
                 await self.sendNotification(message)
 
         print(f"Last twitch status: {response.status_code}")
+        if not ok:
+            print(f'Body: {response.text}')
 
 
     @checkStreaming.before_loop
