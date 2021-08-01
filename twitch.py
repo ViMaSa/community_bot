@@ -41,7 +41,7 @@ class TwitchCog(commands.Cog):
         if not ok:
             print(f'Body: {response.text}')
             if response.status_code == 401:
-                print("Attempting token refresh")
+                print("Twitch: Attempting token refresh")
                 self.refreshToken()
 
 
@@ -69,6 +69,7 @@ class TwitchCog(commands.Cog):
         response = requests.post(url, headers=headers, params=params)
         if (response.status_code == 200):
             self.token = response.json()['access_token']
+            print('Twitch: Token refreshed successfully!')
         else:
-            print(f'Failed to refresh token\nResponse: {response.text}')
+            print(f'Twitch: Failed to refresh token\nResponse: {response.text}')
 
