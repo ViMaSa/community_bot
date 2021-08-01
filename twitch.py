@@ -37,8 +37,8 @@ class TwitchCog(commands.Cog):
                 message = f'{self.settings.TWITCH_MSG}\n{url}'
                 await self.sendNotification(message)
 
-        print(f"Last twitch status: {response.status_code}")
         if not ok:
+            print(f"Twitch: Error: Status: {response.status_code}")
             print(f'Body: {response.text}')
             if response.status_code == 401:
                 print("Twitch: Attempting token refresh")

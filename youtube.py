@@ -47,8 +47,6 @@ class YoutubeCog(commands.Cog):
                 self.prevTime = videoDate
                 print(f"New video published on: {videoDate}")
                 return recentVideo['contentDetails']['videoId']
-            else:
-                print(f'Most recent video date: {videoDate}')
         else:
             print(f'Youtube: Received invalid response code: {response.status_code} Body:\n{response.text}')
 
