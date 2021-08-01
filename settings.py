@@ -16,4 +16,5 @@ class Settings(object):
         self.TWITCH_CLIENT_ID = os.getenv('TWITCH_CLIENT_ID')
         self.TWITCH_USER_ID = os.getenv('TWITCH_USER_ID')
         self.TWITCH_MSG = os.getenv('TWITCH_MSG')
+        self.TWITCH_SECRET = os.getenv('TWITCH_SECRET')
         
